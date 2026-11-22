@@ -19,19 +19,20 @@ SSL_CTX.verify_mode = ssl.CERT_NONE
 BUSAN_ENDPOINTS = [
     {
         "category": "미술·전시",
-        "url": "https://data.go.kr"
+        "url": "http://data.go.kr"
     },
     {
         "category": "음악·공연",
-        "url": "https://data.go.kr"
+        "url": "http://data.go.kr"
     },
     {
         "category": "음악·공연",
-        "url": "https://data.go.kr"
+        "url": "http://data.go.kr"
     }
 ]
 
-KCISA_AREA_URL = "https://data.go.kr"
+KCISA_AREA_URL = "http://data.go.kr"
+
 
 
 TARGET_SIDOS = [
@@ -60,7 +61,13 @@ VENUE_TO_DISTRICT = {
 }
 
 def http_get_text(url, timeout=25):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, application/xml, text/xml, */*; q=0.8",
+        "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Connection": "keep-alive"
+    }
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=timeout, context=SSL_CTX) as res:
         raw = res.read()
     for enc in ("utf-8", "cp949", "euc-kr"):
@@ -69,6 +76,7 @@ def http_get_text(url, timeout=25):
         except Exception:
             continue
     return raw.decode("utf-8", errors="ignore")
+
 
 def fetch_newsbusan_articles():
     """뉴스부산 메인 및 RSS에서 개별 기사 고유 링크(idx=...)와 제목을 안전하게 추출"""
