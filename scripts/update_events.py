@@ -1,5 +1,6 @@
 import os
 import re
+import ssl
 import json
 import urllib.request
 import urllib.parse
@@ -7,24 +8,26 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 
 API_KEY = os.environ.get("BUSAN_API_KEY", "").strip()
-NEWSBUSAN_RSS_URL = "https://newsbusan.com"
+NEWSBUSAN_URL = "https://newsbusan.com"
 OUTPUT_PATH = "data/events.json"
+
+# 공공데이터포털 최신 SSL 호환 컨텍스트
+SSL_CTX = ssl.create_default_context()
+SSL_CTX.check_hostname = False
+SSL_CTX.verify_mode = ssl.CERT_NONE
 
 BUSAN_ENDPOINTS = [
     {
         "category": "미술·전시",
-        "url": "https://data.go.kr",
-        "root_key": "getBusanCultureExhibit"
+        "url": "https://data.go.kr"
     },
     {
         "category": "음악·공연",
-        "url": "https://data.go.kr",
-        "root_key": "getBusanCultureConcert"
+        "url": "https://data.go.kr"
     },
     {
         "category": "음악·공연",
-        "url": "https://data.go.kr",
-        "root_key": "getBusanCultureMusical"
+        "url": "https://data.go.kr"
     }
 ]
 
@@ -54,23 +57,39 @@ VENUE_TO_DISTRICT = {
     "금정문화회관": "금정구", "영도문화예술회관": "영도구", "피아크": "영도구"
 }
 
+def http_get_text(url, timeout=25):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+    with urllib.request.urlopen(req, timeout=timeout, context=SSL_CTX) as res:
+        raw = res.read()
+    for enc in ("utf-8", "cp949", "euc-kr"):
+        try:
+            return raw.decode(enc)
+        except Exception:
+            continue
+    return raw.decode("utf-8", errors="ignore")
+
 def fetch_newsbusan_articles():
+    """뉴스부산 메인 및 RSS에서 개별 기사 고유 링크(idx=...)와 제목을 안전하게 추출"""
     articles = []
-    try:
-        req = urllib.request.Request(NEWSBUSAN_RSS_URL, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=15) as res:
-            xml_data = res.read()
-        root = ET.fromstring(xml_data)
-        for item in root.findall(".//item"):
-            title_el = item.find("title")
-            link_el = item.find("link")
-            if title_el is not None and link_el is not None:
-                title = (title_el.text or "").strip()
-                link = (link_el.text or "").strip()
-                if link.startswith("http") and link.rstrip("/") not in ["https://newsbusan.com", "https://newsbusan.com"]:
-                    articles.append({"title": title, "link": link})
-    except Exception as e:
-        print(f"뉴스부산 RSS 수집 알림: {e}")
+    seen_links = set()
+    for target in ["https://newsbusan.com/rss", "https://newsbusan.com"]:
+        try:
+            html = http_get_text(target, timeout=15)
+            # 개별 기사 링크(idx=숫자)와 제목 매칭
+            for m in re.finditer(r'href=["\']([^"\']*idx=\d+[^"\']*)["\'][^>]*>(.*?)</a>', html, re.S | re.I):
+                href = m.group(1).strip()
+                title = re.sub(r"<[^>]+>", "", m.group(2)).strip()
+                if len(title) < 6:
+                    continue
+                if href.startswith("/"):
+                    href = NEWSBUSAN_URL + href
+                elif not href.startswith("http"):
+                    href = NEWSBUSAN_URL + "/" + href.lstrip("/")
+                if href not in seen_links:
+                    seen_links.add(href)
+                    articles.append({"title": title, "link": href})
+        except Exception as e:
+            print(f"뉴스부산 수집 참고: {e}")
     return articles
 
 def match_news_article(event_title, articles):
@@ -118,6 +137,35 @@ def normalize_key(title, start_dt):
     clean = re.sub(r"[^가-힣a-zA-Z0-9]", "", title).lower()
     return f"{clean}_{start_dt}"
 
+def parse_items_flexible(raw_text):
+    """JSON 또는 XML 어느 형식으로 응답이 와도 <item> 목록을 추출"""
+    text = raw_text.strip()
+    if text.startswith("{"):
+        data = json.loads(text)
+        def find_items(obj):
+            if isinstance(obj, list):
+                return obj
+            if isinstance(obj, dict):
+                if "item" in obj:
+                    val = obj["item"]
+                    return val if isinstance(val, list) else [val]
+                for v in obj.values():
+                    res = find_items(v)
+                    if res:
+                        return res
+            return []
+        return find_items(data)
+    else:
+        root = ET.fromstring(text)
+        items = []
+        for el in root.findall(".//item") or root.findall(".//perforList"):
+            d = {}
+            for child in el:
+                d[child.tag] = (child.text or "").strip()
+            if d:
+                items.append(d)
+        return items
+
 def fetch_busan_api(articles, seen_keys):
     results = []
     today_dot = datetime.now().strftime("%Y.%m.%d")
@@ -125,21 +173,16 @@ def fetch_busan_api(articles, seen_keys):
     for ep in BUSAN_ENDPOINTS:
         req_url = f"{ep['url']}?serviceKey={API_KEY}&pageNo=1&numOfRows=40&resultType=json"
         try:
-            req = urllib.request.Request(req_url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=20) as res:
-                raw = json.loads(res.read().decode("utf-8"))
-
-            items = raw.get(ep["root_key"], {}).get("item", [])
-            if isinstance(items, dict):
-                items = [items]
+            raw_text = http_get_text(req_url, timeout=20)
+            items = parse_items_flexible(raw_text)
 
             for item in items:
-                title = (item.get("title") or "").strip()
+                title = str(item.get("title") or "").strip()
                 start_dt = format_date(item.get("op_st_dt") or "")
                 end_dt = format_date(item.get("op_ed_dt") or "")
-                venue = (item.get("place_nm") or "").strip()
-                fee = (item.get("pay_at") or "주최 측 문의").strip()
-                dabom_url = (item.get("dabom_url") or item.get("homepage") or "https://busandabom.net").strip()
+                venue = str(item.get("place_nm") or "").strip()
+                fee = str(item.get("pay_at") or "주최 측 문의").strip()
+                dabom_url = str(item.get("dabom_url") or item.get("homepage") or "https://busandabom.net").strip()
 
                 if not title or not end_dt or not venue or end_dt < today_dot:
                     continue
@@ -161,13 +204,13 @@ def fetch_busan_api(articles, seen_keys):
                     "period": period,
                     "endDate": end_dt,
                     "venue": venue,
-                    "artist": (item.get("supervise") or "부산문화포털 다봄 공식 등록").strip(),
+                    "artist": str(item.get("supervise") or "부산문화포털 다봄 공식 등록").strip(),
                     "fee": fee,
                     "newsUrl": match_news_article(title, articles),
                     "officialUrl": dabom_url
                 })
         except Exception as e:
-            print(f"[{ep['root_key']}] 호출 알림: {e}")
+            print(f"[부산API-{ep['category']}] 참고: {e}")
     return results
 
 def fetch_kcisa_api(articles, seen_keys):
@@ -178,23 +221,20 @@ def fetch_kcisa_api(articles, seen_keys):
     for reg in TARGET_SIDOS:
         sido = reg["sido"]
         sido_enc = urllib.parse.quote(sido)
-        req_url = f"{KCISA_AREA_URL}?serviceKey={API_KEY}&sido={sido_enc}&from={today_num}&PageNo=1&numOfrows={reg['rows']}"
+        req_url = f"{KCISA_AREA_URL}?serviceKey={API_KEY}&sido={sido_enc}&from={today_num}&PageNo=1&numOfrows={reg['rows']}&_type=json"
 
         try:
-            req = urllib.request.Request(req_url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=25) as res:
-                xml_data = res.read()
+            raw_text = http_get_text(req_url, timeout=25)
+            items = parse_items_flexible(raw_text)
 
-            root = ET.fromstring(xml_data)
-            items = root.findall(".//item") or root.findall(".//perforList")
             for item in items:
-                title = (item.findtext("title") or "").strip()
-                start_dt = format_date(item.findtext("startDate") or "")
-                end_dt = format_date(item.findtext("endDate") or "")
-                place = (item.findtext("place") or "").strip()
-                gugun = (item.findtext("gugun") or "").strip()
-                realm = (item.findtext("realmName") or "").strip()
-                seq = (item.findtext("seq") or "").strip()
+                title = str(item.get("title") or "").strip()
+                start_dt = format_date(item.get("startDate") or "")
+                end_dt = format_date(item.get("endDate") or "")
+                place = str(item.get("place") or "").strip()
+                gugun = str(item.get("gugun") or "").strip()
+                realm = str(item.get("realmName") or "").strip()
+                seq = str(item.get("seq") or "").strip()
 
                 if not title or not end_dt or not place or end_dt < today_dot:
                     continue
@@ -213,7 +253,8 @@ def fetch_kcisa_api(articles, seen_keys):
                     "isBusan": reg["is_busan"],
                     "status": status,
                     "category": map_category(realm, title),
-                    "region": map_region(sido, f"{gugun} {place}"),
+
+                                        "region": map_region(sido, f"{gugun} {place}"),
                     "title": title,
                     "period": period,
                     "endDate": end_dt,
@@ -224,7 +265,7 @@ def fetch_kcisa_api(articles, seen_keys):
                     "officialUrl": official_url
                 })
         except Exception as e:
-            print(f"[KCISA-{sido}] 호출 알림: {e}")
+            print(f"[통합API-{sido}] 참고: {e}")
     return results
 
 def main():
@@ -234,6 +275,7 @@ def main():
 
     os.makedirs("data", exist_ok=True)
     articles = fetch_newsbusan_articles()
+    print(f"뉴스부산 기사 인덱스 {len(articles)}건 확보.")
     seen_keys = set()
 
     busan_events = fetch_busan_api(articles, seen_keys)
@@ -245,10 +287,10 @@ def main():
     if all_events:
         with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
             json.dump(all_events, f, ensure_ascii=False, indent=2)
-
-        print(f"총 {len(all_events)}건(부산 {len(busan_events)}건 + 통합 {len(kcisa_events)}건) 업데이트 완료.")
+        print(f"성공: 총 {len(all_events)}건(부산 {len(busan_events)}건 + 통합 {len(kcisa_events)}건) 업데이트 완료.")
     else:
         print("수집된 신규 데이터가 없습니다.")
 
 if __name__ == "__main__":
     main()
+
