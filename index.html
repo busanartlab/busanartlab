@@ -240,13 +240,26 @@
     let allEvents = [], currentCategory = "전체", currentRegion = "전체", currentKeyword = "";
     const artGrid = document.getElementById("artGrid"), searchInput = document.getElementById("searchInput"), regionSelect = document.getElementById("regionSelect"), tabButtons = document.querySelectorAll(".tab-btn"), resultCount = document.getElementById("resultCount");
 
-    async function loadAutoEvents() {
+        async function loadAutoEvents() {
       try {
         const res = await fetch(`${AUTO_DATA_URL}?v=${Date.now()}`);
         if (!res.ok) throw new Error("데이터 대기 중");
-        const data = await res.json();
+        const raw = await res.json();
+        const list = Array.isArray(raw) ? raw : (raw.events || raw.items || raw.data || Object.values(raw).find(v => Array.isArray(v)) || []);
         const today = new Date().toISOString().slice(0, 10).replace(/-/g, ".");
-        allEvents = data.filter(item => !item.endDate || item.endDate >= today);
+        allEvents = list.map(item => ({
+          title: item.title || item.TITLE || item.svcnm || "제목 없음",
+          category: item.category || item.CATEGORY || "미술·전시",
+          region: item.region || item.REGION || "부산",
+          period: item.period || item.PERIOD || "",
+          endDate: item.endDate || item.END_DATE || "",
+          venue: item.venue || item.VENUE || item.placenm || "",
+          artist: item.artist || item.ARTIST || "-",
+          fee: item.fee || item.FEE || "무료",
+          status: item.status || "진행중",
+          newsUrl: item.newsUrl || "",
+          officialUrl: item.officialUrl || item.SVCURL || ""
+        })).filter(item => !item.endDate || item.endDate >= today);
         renderCards();
       } catch (err) {
         resultCount.textContent = "총 0건의 큐레이션";
