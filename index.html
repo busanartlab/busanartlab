@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>부산아트큐레이터 | 부산아트랩(busanartlab.com) · 부산·전국 전시·공연·비평 아카이브</title>
+  <meta name="description" content="문화예술의 그릇 부산아트랩(busanartlab.com)에 부산 16개 구·군과 전국 주요 지역의 전시·공연 일정을 담고, 부산아트큐레이터와 뉴스부산(newsbusan.com)이 심층 비평과 작가 인터뷰로 맥락을 빚어냅니다." />
+  <meta name="keywords" content="부산아트랩, busanartlab, 부산아트큐레이터, 뉴스부산, 부산전시, 부산공연, 부산갤러리, 전국전시, 부산예술비평" />
+  <link rel="canonical" href="https://busanartlab.com" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="부산아트랩 · 부산아트큐레이터" />
+  <meta property="og:title" content="부산아트큐레이터 | 부산아트랩(busanartlab.com)" />
+  <meta property="og:description" content="부산 16개 구·군 및 전국 주요 전시·공연 공식 일정과 뉴스부산 심층 비평·작가 인터뷰 아카이브" />
+  <meta property="og:url" content="https://busanartlab.com" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "부산아트큐레이터 (부산아트랩)",
+    "alternateName": ["Busan Art Lab", "Busan Art Curator", "busanartlab.com"],
+    "url": "https://busanartlab.com",
+    "description": "문화예술 플랫폼 부산아트랩(busanartlab.com) 기반 부산·전국 전시·공연 공식 일정 큐레이션 및 뉴스부산 비평 아카이브",
+    "publisher": {
+      "@type": "Organization",
+      "name": "뉴스부산(NEWSBUSAN)",
+      "url": "https://newsbusan.com"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg-page: #faf9f6; --bg-card: #ffffff; --bg-subtle: #f4f3ef;
+      --ink-dark: #18181b; --ink-muted: #52525b; --ink-light: #71717a;
+      --accent-brick: #9a3412; --accent-hover: #7c2d12; --accent-soft: #fff7ed;
+      --line: #e4e4e7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; background: var(--bg-page); color: var(--ink-dark); line-height: 1.65; word-break: keep-all; }
+    .top-bar { background: var(--ink-dark); color: #e4e4e7; font-size: 0.78rem; padding: 0.45rem 1.5rem; }
+    .top-bar-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .domain-pill { font-weight: 700; letter-spacing: 0.04em; color: #fdba74; }
+    .top-links a { color: #d4d4d8; text-decoration: none; margin-left: 1rem; }
+    .top-links a:hover { color: #fff; text-decoration: underline; }
+    header { background: var(--bg-card); border-bottom: 2px solid var(--ink-dark); padding: 2.2rem 1.5rem 2rem; }
+    .header-inner { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.65rem; }
+    .brand-tag { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; color: var(--accent-brick); text-transform: uppercase; }
+    .title-row { display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
+    header h1 { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.025em; }
+    .sub-badge { font-size: 0.85rem; font-weight: 700; color: var(--ink-muted); background: var(--bg-subtle); padding: 0.2rem 0.65rem; border-radius: 3px; border: 1px solid var(--line); }
+    header p { font-size: 0.96rem; color: var(--ink-muted); max-width: 780px; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.35rem; }
+    .hash-tag { font-size: 0.76rem; color: var(--ink-light); background: var(--bg-page); border: 1px solid var(--line); padding: 0.15rem 0.5rem; border-radius: 3px; }
+    .toolbar { max-width: 1120px; margin: 1.8rem auto 1.4rem; padding: 0 1.5rem; }
+    .search-wrap { display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .search-input { flex: 1; min-width: 240px; padding: 0.75rem 1rem; border: 1.5px solid var(--ink-dark); background: #fff; font-size: 0.95rem; border-radius: 4px; }
+    .region-select { padding: 0.75rem 1rem; border: 1.5px solid var(--ink-dark); background: #fff; font-size: 0.9rem; font-weight: 700; border-radius: 4px; cursor: pointer; min-width: 220px; }
+    .tabs-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; border-bottom: 1px solid var(--line); padding-bottom: 1rem; }
+    .tabs { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+    .tab-btn { padding: 0.48rem 1rem; border: 1px solid var(--line); background: #fff; color: var(--ink-muted); font-size: 0.88rem; font-weight: 700; cursor: pointer; border-radius: 4px; }
+    .tab-btn.active, .tab-btn:hover { background: var(--ink-dark); color: #fff; border-color: var(--ink-dark); }
+    .count-info { font-size: 0.85rem; color: var(--ink-muted); font-weight: 600; }
+    main { max-width: 1120px; margin: 0 auto 4rem; padding: 0 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.5rem; }
+    .art-card { background: var(--bg-card); border: 1px solid var(--line); border-top: 4px solid var(--ink-dark); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: box-shadow 0.2s, transform 0.2s; }
+    .art-card.has-review { border-top-color: var(--accent-brick); }
+    .art-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; margin-bottom: 0.85rem; padding-bottom: 0.65rem; border-bottom: 1px dashed var(--line); gap: 0.5rem; }
+    .cat-group { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+    .cat-label { font-weight: 800; color: var(--accent-brick); }
+    .status-badge { font-size: 0.72rem; font-weight: 700; padding: 0.12rem 0.45rem; border-radius: 3px; background: var(--ink-dark); color: #fff; }
+    .status-badge.upcoming { background: var(--bg-subtle); color: var(--ink-dark); border: 1px solid var(--line); }
+    .review-badge { font-size: 0.72rem; font-weight: 700; padding: 0.12rem 0.45rem; border-radius: 3px; background: var(--accent-soft); color: var(--accent-brick); border: 1px solid #fed7aa; }
+    .loc-label { color: var(--ink-muted); font-weight: 700; white-space: nowrap; }
+    .art-card h2 { font-size: 1.18rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.42; }
+    .fact-list { list-style: none; font-size: 0.88rem; color: var(--ink-muted); margin-bottom: 1.3rem; background: var(--bg-page); padding: 0.9rem 1rem; border-radius: 4px; border: 1px solid #f0efe9; }
+    .fact-list li { margin-bottom: 0.35rem; padding-left: 0.85rem; position: relative; }
+    .fact-list li:last-child { margin-bottom: 0; }
+    .fact-list li::before { content: "▪"; position: absolute; left: 0; color: var(--accent-brick); }
+    .actions { display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto; }
+    .btn-row { display: flex; gap: 0.45rem; }
+    .btn { display: block; text-align: center; padding: 0.7rem 0.9rem; font-size: 0.86rem; font-weight: 700; text-decoration: none; border-radius: 4px; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent-brick); color: #fff; width: 100%; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: #fff; color: var(--ink-dark); border: 1px solid var(--ink-dark); flex: 1; }
+    .btn-share { background: var(--bg-subtle); color: var(--ink-muted); border: 1px solid var(--line); padding: 0.7rem 0.75rem; font-size: 0.82rem; }
+    footer { background: var(--ink-dark); color: #a1a1aa; padding: 3rem 1.5rem; font-size: 0.85rem; }
+    .footer-inner { max-width: 1120px; margin: 0 auto; }
+    .footer-title { color: #fff; font-size: 1.05rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .footer-nav { margin: 1.1rem 0; padding: 0.85rem 0; border-top: 1px solid #27272a; border-bottom: 1px solid #27272a; display: flex; flex-wrap: wrap; gap: 1.4rem; }
+    .footer-nav a, .footer-nav button { background: none; border: none; color: #e4e4e7; text-decoration: none; font-size: 0.86rem; font-weight: 700; cursor: pointer; padding: 0; }
+    .footer-note { font-size: 0.78rem; line-height: 1.65; color: #71717a; }
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(24,24,27,0.65); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal-box { background: #fff; max-width: 540px; width: 100%; border-top: 5px solid var(--accent-brick); padding: 1.8rem; border-radius: 4px; max-height: 90vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--line); }
+    .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; }
+    .modal-body p { font-size: 0.92rem; color: var(--ink-muted); margin-bottom: 0.85rem; }
+    .form-group { margin-bottom: 0.85rem; }
+    .form-group label { display: block; font-size: 0.83rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.65rem 0.8rem; border: 1px solid #d4d4d8; border-radius: 4px; font-size: 0.9rem; font-family: inherit; }
+    .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--ink-dark); color: #fff; padding: 0.75rem 1.2rem; border-radius: 4px; font-size: 0.86rem; opacity: 0; pointer-events: none; transition: opacity 0.25s; z-index: 2000; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>    
+
+    <body>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div><span class="domain-pill">BUSANARTLAB.COM</span> · 부산·전국 문화예술 큐레이션 & 비평 아카이브</div>
+      <div class="top-links">
+        <a href="https://newsbusan.com" target="_blank" rel="noopener">뉴스부산(NEWSBUSAN)</a>
+        <a href="#submit" onclick="openModal('submitModal'); return false;">일정 제보</a>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <span class="brand-tag">BUSAN ART LAB (busanartlab.com) · CURATED BY NEWSBUSAN</span>
+      <div class="title-row">
+        <h1>부산아트큐레이터</h1>
+        <span class="sub-badge">부산아트랩 문화예술 아카이브</span>
+      </div>
+      <p>문화예술의 그릇 <strong>부산아트랩(busanartlab.com)</strong>에 부산 16개 구·군과 전국 주요 지역의 전시·공연 공식 일정을 담고, <strong>부산아트큐레이터</strong>와 인터넷신문 <strong>뉴스부산(newsbusan.com)</strong>이 심층 비평과 작가 인터뷰로 맥락을 빚어냅니다.</p>
+      <div class="tag-cloud">
+        <span class="hash-tag">#부산아트랩</span>
+        <span class="hash-tag">#busanartlab</span>
+        <span class="hash-tag">#부산아트큐레이터</span>
+        <span class="hash-tag">#뉴스부산</span>
+        <span class="hash-tag">#부산전시아카이브</span>
+        <span class="hash-tag">#부산공연큐레이션</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="toolbar">
+    <div class="search-wrap">
+      <input type="text" id="searchInput" class="search-input" placeholder="전시명, 작가명, 공연장, 지역 검색..." />
+      <select id="regionSelect" class="region-select">
+        <option value="전체">전체 지역 (부산 16개 구·군 및 전국)</option>
+        <optgroup label="── 부산광역시 (16개 구·군 전체) ──">
+          <option value="부산 강서구">부산 · 강서구</option>
+          <option value="부산 금정구">부산 · 금정구</option>
+          <option value="부산 기장군">부산 · 기장군</option>
+          <option value="부산 남구">부산 · 남구</option>
+          <option value="부산 동구">부산 · 동구</option>
+          <option value="부산 동래구">부산 · 동래구</option>
+          <option value="부산 부산진구">부산 · 부산진구</option>
+          <option value="부산 북구">부산 · 북구</option>
+          <option value="부산 사상구">부산 · 사상구</option>
+          <option value="부산 사하구">부산 · 사하구</option>
+          <option value="부산 서구">부산 · 서구</option>
+          <option value="부산 수영구">부산 · 수영구</option>
+          <option value="부산 연제구">부산 · 연제구</option>
+          <option value="부산 영도구">부산 · 영도구</option>
+          <option value="부산 중구">부산 · 중구</option>
+          <option value="부산 해운대구">부산 · 해운대구</option>
+        </optgroup>
+        <optgroup label="── 전국 주요 권역 ──">
+          <option value="서울·수도권">전국 · 서울·수도권</option>
+          <option value="울산·경남">전국 · 울산·경남</option>
+          <option value="대구·경북">전국 · 대구·경북</option>
+          <option value="광주·전라">전국 · 광주·전라</option>
+          <option value="대전·충청·강원·제주">전국 · 대전·충청·강원·제주</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="tabs-row">
+      <div class="tabs" id="categoryTabs">
+        <button class="tab-btn active" data-cat="전체">전체 큐레이션</button>
+        <button class="tab-btn" data-cat="미술·전시">미술·전시</button>
+        <button class="tab-btn" data-cat="음악·공연">음악·공연</button>
+        <button class="tab-btn" data-cat="서예·문학">서예·문학</button>
+        <button class="tab-btn" data-cat="축제·행사">축제·행사</button>
+      </div>
+      <div class="count-info" id="resultCount">총 0건의 큐레이션</div>
+    </div>
+  </section>
+
+  <main><div class="grid" id="artGrid"></div></main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-title">부산아트큐레이터 · 부산아트랩 (busanartlab.com)</div>
+      <p>문화예술의 그릇 부산아트랩에 담긴 공식 전시·공연 일정과 출처를 안내하며, 뉴스부산(newsbusan.com)의 예술·비평 보도와 연계되는 독립 문화 인덱스입니다.</p>
+      <div class="footer-nav">
+        <a href="https://newsbusan.com" target="_blank" rel="noopener">뉴스부산(NEWSBUSAN) 홈</a>
+        <button type="button" onclick="openModal('aboutModal')">서비스 소개</button>
+        <button type="button" onclick="openModal('submitModal')">전시·공연 제보 및 정정</button>
+      </div>
+      <p class="footer-note">
+        ※ 본 아카이브는 공공데이터포털(부산광역시·한국문화정보원) 공식 API 및 뉴스부산 편집국 검증 데이터를 기반으로 자동 동기화됩니다.<br />
+        © Busan Art Lab (busanartlab.com) & NEWSBUSAN. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="aboutModal" onclick="if(event.target===this) closeModal('aboutModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>서비스 소개 · 부산아트랩 × 부산아트큐레이터</h3>
+        <button type="button" class="modal-close" onclick="closeModal('aboutModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>부산아트랩(busanartlab.com)</strong>은 부산 16개 구·군과 전국 주요 미술관, 갤러리, 공연장의 핵심 문화예술 일정을 체계적으로 기록하는 디지털 아카이브입니다.</p>
+        <p><strong>부산아트큐레이터</strong>는 인터넷신문 <strong>뉴스부산(newsbusan.com)</strong>의 미학 칼럼, 전시 비평, 작가 초대석 인터뷰와 일정을 입체적으로 연결하여 작품의 깊이를 전합니다.</p>
+        <button type="button" class="btn btn-primary" onclick="closeModal('aboutModal')">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="submitModal" onclick="if(event.target===this) closeModal('submitModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>전시·공연 일정 제보 및 정정 요청</h3>
+        <button type="button" class="modal-close" onclick="closeModal('submitModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="submitEventMail(event)">
+          <div class="form-group">
+            <label>장르 구분</label>
+            <select id="fCategory"><option>미술·전시</option><option>음악·공연</option><option>서예·문학</option><option>축제·행사</option></select>
+          </div>
+          <div class="form-group"><label>행사명</label><input type="text" id="fTitle" required placeholder="예: 2026 부산 현대미술 기획전" /></div>
+          <div class="form-group"><label>기간 및 장소</label><input type="text" id="fInfo" required placeholder="예: 2026.12.01~12.20 / 부산 해운대구 OO갤러리" /></div>
+          <div class="form-group"><label>상세 내용 및 공식 링크</label><textarea id="fDesc" rows="3"></textarea></div>
+          <button type="submit" class="btn btn-primary">이메일로 제보하기 (newsbusancom@daum.net)</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">링크가 복사되었습니다.</div>
+
+  <script>
+    const AUTO_DATA_URL = "./data/events.json";
+    let allEvents = [], currentCategory = "전체", currentRegion = "전체", currentKeyword = "";
+    const artGrid = document.getElementById("artGrid"), searchInput = document.getElementById("searchInput"), regionSelect = document.getElementById("regionSelect"), tabButtons = document.querySelectorAll(".tab-btn"), resultCount = document.getElementById("resultCount");
+
+    async function loadAutoEvents() {
+      try {
+        const res = await fetch(`${AUTO_DATA_URL}?v=${Date.now()}`);
+        if (!res.ok) throw new Error("데이터 대기 중");
+        const data = await res.json();
+        const today = new Date().toISOString().slice(0, 10).replace(/-/g, ".");
+        allEvents = data.filter(item => !item.endDate || item.endDate >= today);
+        renderCards();
+      } catch (err) {
+        resultCount.textContent = "총 0건의 큐레이션";
+        artGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3.5rem 1.5rem;background:#fff;border:1px solid var(--line);color:var(--ink-muted);"><p style="font-weight:700;color:var(--ink-dark);margin-bottom:0.4rem;">공식 문화예술 데이터베이스(data/events.json) 동기화 대기 중입니다.</p><p style="font-size:0.85rem;">GitHub Actions 자동 수집이 1회 실행되면 검증된 부산·전국 일정이 자동 출력됩니다.</p></div>`;
+      }
+    }
+
+    function renderCards() {
+      const filtered = allEvents.filter(item => {
+        const matchCat = currentCategory === "전체" || item.category === currentCategory;
+        const matchReg = currentRegion === "전체" || item.region === currentRegion;
+        const kw = currentKeyword.toLowerCase().trim();
+        const matchKey = !kw || [item.title, item.venue, item.artist, item.region].some(v => v && v.toLowerCase().includes(kw));
+        return matchCat && matchReg && matchKey;
+      });
+      resultCount.textContent = `총 ${filtered.length}건의 큐레이션`;
+      if (filtered.length === 0) {
+        artGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;background:#fff;border:1px solid var(--line);color:var(--ink-muted);">선택하신 조건에 해당하는 전시·공연 일정이 없습니다.</div>`;
+        return;
+      }
+      artGrid.innerHTML = filtered.map(item => {
+        const isUp = item.status === "예정";
+        const cleanNews = (item.newsUrl || "").trim();
+        const hasSpecificArticle = cleanNews.startsWith("http") && cleanNews.replace(/\/$/, "") !== "https://newsbusan.com" && cleanNews.replace(/\/$/, "") !== "https://newsbusan.com";
+        return `<article class="art-card ${hasSpecificArticle ? "has-review" : ""}">
+          <div>
+            <div class="card-top">
+              <div class="cat-group">
+                <span class="status-badge ${isUp ? "upcoming" : ""}">${item.status || "진행중"}</span>
+                <span class="cat-label">${item.category}</span>
+                ${hasSpecificArticle ? `<span class="review-badge">비평·취재연계</span>` : ""}
+              </div>
+              <span class="loc-label">${item.region}</span>
+            </div>
+            <h2>${item.title}</h2>
+            <ul class="fact-list">
+              <li><strong>일정:</strong> ${item.period}</li>
+              <li><strong>장소:</strong> ${item.venue}</li>
+              <li><strong>참여:</strong> ${item.artist}</li>
+              <li><strong>관람:</strong> ${item.fee}</li>
+            </ul>
+          </div>
+          <div class="actions">
+            ${hasSpecificArticle ? `<a href="${cleanNews}" target="_blank" rel="noopener" class="btn btn-primary">뉴스부산 비평·취재기사 보기</a>` : ""}
+            <div class="btn-row">
+              ${item.officialUrl ? `<a href="${item.officialUrl}" target="_blank" rel="noopener" class="btn btn-secondary">공식 안내·예매</a>` : ""}
+              <button type="button" class="btn btn-share" onclick="copyShare('${item.title.replace(/'/g, "\\'")}')">링크 복사</button>
+            </div>
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+
+
+    searchInput.addEventListener("input", e => { currentKeyword = e.target.value; renderCards(); });
+    regionSelect.addEventListener("change", e => { currentRegion = e.target.value; renderCards(); });
+    tabButtons.forEach(btn => btn.addEventListener("click", () => {
+      tabButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentCategory = btn.getAttribute("data-cat");
+      renderCards();
+    }));
+
+    function openModal(id) { document.getElementById(id).classList.add("open"); }
+    function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+    function copyShare(title) {
+      if (navigator.clipboard) navigator.clipboard.writeText(`[부산아트랩 · 부산아트큐레이터] ${title} - https://busanartlab.com`).then(() => showToast("일정 안내 링크가 복사되었습니다."));
+    }
+    function showToast(msg) {
+      const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2500);
+    }
+    function submitEventMail(e) {
+      e.preventDefault();
+      const sub = encodeURIComponent(`[부산아트랩 제보] (${document.getElementById("fCategory").value}) ${document.getElementById("fTitle").value}`);
+      const body = encodeURIComponent(`기간/장소: ${document.getElementById("fInfo").value}\n내용: ${document.getElementById("fDesc").value}`);
+      window.location.href = `mailto:newsbusancom@daum.net?subject=${sub}&body=${body}`;
+      closeModal("submitModal");
+    }
+    loadAutoEvents();
+  </script>
+</body>
+</html>
