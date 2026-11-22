@@ -28,7 +28,11 @@ jobs:
 
       - name: 변경된 일정 데이터(data/events.json) 자동 반영
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "BusanArtLab Bot"
-          git add data/events.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update verified art events" && git push)
+          if [ -f data/events.json ]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "BusanArtLab Bot"
+            git add data/events.json
+            git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update verified art events" && git push)
+          else
+            echo "아직 생성된 data/events.json 파일이 없습니다."
+          fi
