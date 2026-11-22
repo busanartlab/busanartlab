@@ -33,6 +33,7 @@ BUSAN_ENDPOINTS = [
 
 KCISA_AREA_URL = "https://data.go.kr"
 
+
 TARGET_SIDOS = [
     {"sido": "부산", "rows": 50, "is_busan": True},
     {"sido": "서울", "rows": 25, "is_busan": False},
