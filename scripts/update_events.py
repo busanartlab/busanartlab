@@ -140,6 +140,8 @@ def normalize_key(title, start_dt):
 def parse_items_flexible(raw_text):
     """JSON 또는 XML 어느 형식으로 응답이 와도 <item> 목록을 추출"""
     text = raw_text.strip()
+    if text.startswith("<!DOCTYPE") or text.startswith("<html") or "<html" in text[:200].lower():
+        raise ValueError(f"API가 HTML 오류 페이지를 반환함: {text[:150]}")
     if text.startswith("{"):
         data = json.loads(text)
         def find_items(obj):
@@ -165,6 +167,7 @@ def parse_items_flexible(raw_text):
             if d:
                 items.append(d)
         return items
+
 
 def fetch_busan_api(articles, seen_keys):
     results = []
