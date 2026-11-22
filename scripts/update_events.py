@@ -6,7 +6,7 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-API_KEY = os.environ.get("BUSAN_API_KEY", "")
+API_KEY = os.environ.get("BUSAN_API_KEY", "").strip()
 NEWSBUSAN_RSS_URL = "https://newsbusan.com"
 OUTPUT_PATH = "data/events.json"
 
