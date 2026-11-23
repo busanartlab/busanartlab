@@ -441,12 +441,12 @@
       <h1>부산아트랩 문화예술 아카이브</h1>
       <p>문화예술의 그릇 부산아트랩에 부산 16개 구·군과 전국 주요 지역의 검증된 전시·공연 공식 일정을 담고, 부산아트큐레이터와 뉴스부산이 심층 비평으로 맥락을 연결합니다.</p>
       <div class="hashtags">
-        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산아트랩';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산아트랩</span>
-        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='busanartlab';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#busanartlab</span>
-        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산아트큐레이터';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산아트큐레이터</span>
-        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='뉴스부산';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#뉴스부산</span>
-        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산전시아카이브';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산전시아카이브</span>
-        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산공연큐레이션';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산공연큐레이션</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산아트랩';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});" style="cursor:pointer;" onclick="var k=document.getElementById('keywordInput');k.value='부산아트랩';k.dispatchEvent(new Event('input'));">#부산아트랩</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='busanartlab';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});" style="cursor:pointer;" onclick="var k=document.getElementById('keywordInput');k.value='busanartlab';k.dispatchEvent(new Event('input'));">#busanartlab</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산아트큐레이터';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});" style="cursor:pointer;" onclick="var k=document.getElementById('keywordInput');k.value='부산아트큐레이터';k.dispatchEvent(new Event('input'));">#부산아트큐레이터</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='뉴스부산';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});" style="cursor:pointer;" onclick="var k=document.getElementById('keywordInput');k.value='뉴스부산';k.dispatchEvent(new Event('input'));">#뉴스부산</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산전시아카이브';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});" style="cursor:pointer;" onclick="var k=document.getElementById('keywordInput');k.value='부산전시아카이브';k.dispatchEvent(new Event('input'));">#부산전시아카이브</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산공연큐레이션';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});" style="cursor:pointer;" onclick="var k=document.getElementById('keywordInput');k.value='부산공연큐레이션';k.dispatchEvent(new Event('input'));">#부산공연큐레이션</span>
       </div>
     </div>
   </header>
@@ -458,7 +458,7 @@
         <div class="pill-group" id="statusPills">
           <button type="button" class="pill-btn active" data-status="ALL">전체 일정</button>
           <button type="button" class="pill-btn" data-status="진행중">진행중</button>
-          <button type="button" class="pill-btn" data-status="예정">개막 예정</button>
+          <button type="button" class="pill-btn" data-status="예정">예정</button>
         </div>
       </div>
 
@@ -475,35 +475,33 @@
       </div>
 
       <div class="search-controls">
-        <select id="regionSelect" aria-label="지역 선택">
-          <option value="ALL">전체 지역 (부산 16개 구·군 및 전국)</option>
-          <option value="BUSAN_ALL">부산 전체 (16개 구·군)</option>
-          <optgroup label="부산 16개 구·군">
-            <option value="부산 동구">부산 동구 (시민회관·가온아트홀 등)</option>
-            <option value="부산 남구">부산 남구 (문화회관·드림씨어터 등)</option>
-            <option value="부산 해운대구">부산 해운대구 (시립미술관·영화의전당 등)</option>
-            <option value="부산 수영구">부산 수영구 (F1963 등)</option>
-            <option value="부산 부산진구">부산 부산진구 (시민공원·상상마당 등)</option>
-            <option value="부산 사하구">부산 사하구 (현대미술관·을숙도 등)</option>
-            <option value="부산 영도구">부산 영도구 (영도문화예술회관·피아크 등)</option>
-            <option value="부산 금정구">부산 금정구 (금정문화회관·부산대 등)</option>
-            <option value="부산 중구">부산 중구 (근현대역사관·민주공원 등)</option>
-            <option value="부산 동래구">부산 동래구 (동래문화회관·복천박물관 등)</option>
-            <option value="부산 연제구">부산 연제구 (부산시청 등)</option>
-            <option value="부산 북구">부산 북구 (백양문화예술회관 등)</option>
-            <option value="부산 사상구">부산 사상구 (인디스테이션·다누림홀 등)</option>
-            <option value="부산 서구">부산 서구 (석당박물관·임시수도기념관 등)</option>
-            <option value="부산 강서구">부산 강서구 (국회부산도서관 등)</option>
-            <option value="부산 기장군">부산 기장군 (국립부산과학관·정관박물관 등)</option>
-          </optgroup>
-          <optgroup label="전국 주요 권역">
-            <option value="서울·수도권">서울·수도권</option>
-            <option value="울산·경남">울산·경남</option>
-            <option value="대구·경북">대구·경북</option>
-            <option value="광주·전라">광주·전라</option>
-            <option value="대전·충청·강원·제주">대전·충청·강원·제주</option>
-          </optgroup>
-        </select>
+        <select id="regionSelect" class="region-select">
+  <option value="ALL" style="font-weight:700;">◆ 전체 지역 (부산 및 전국)</option>
+  <option value="부산 전체" style="font-weight:700;">◆ 부산 전역 (16개 구·군)</option>
+  <option value="부산 동구">부산 동구 (시민회관·가온아트홀 등)</option>
+  <option value="부산 남구">부산 남구 (문화회관·드림씨어터 등)</option>
+  <option value="부산 해운대구">부산 해운대구 (시립미술관·영화의전당 등)</option>
+  <option value="부산 수영구">부산 수영구 (F1963 등)</option>
+  <option value="부산 부산진구">부산 부산진구 (시민공원·상상마당 등)</option>
+  <option value="부산 사하구">부산 사하구 (현대미술관·을숙도 등)</option>
+  <option value="부산 영도구">부산 영도구 (영도문화예술회관·피아크 등)</option>
+  <option value="부산 금정구">부산 금정구 (금정문화회관·부산대 등)</option>
+  <option value="부산 중구">부산 중구 (근현대역사관·민주공원 등)</option>
+  <option value="부산 동래구">부산 동래구 (동래문화회관·복천박물관 등)</option>
+  <option value="부산 연제구">부산 연제구 (부산시청 등)</option>
+  <option value="부산 북구">부산 북구 (백양문화예술회관 등)</option>
+  <option value="부산 사상구">부산 사상구 (인디스테이션·다누림홀 등)</option>
+  <option value="부산 서구">부산 서구 (석당박물관·임시수도기념관 등)</option>
+  <option value="부산 강서구">부산 강서구 (국회부산도서관 등)</option>
+  <option value="부산 기장군">부산 기장군 (국립부산과학관·정관박물관 등)</option>
+  <option value="전국 주요 권역" style="font-weight:700;">◆ 전국 주요 권역</option>
+  <option value="서울·수도권">서울·수도권</option>
+  <option value="울산·경남">울산·경남</option>
+  <option value="대구·경북">대구·경북</option>
+  <option value="광주·전라">광주·전라</option>
+  <option value="대전·충청·강원·제주">대전·충청·강원·제주</option>
+  <option value="강경호 문화칼럼" style="font-weight:700;">◆ 강경호 문화칼럼</option>
+</select>
 
         <input type="text" id="keywordInput" placeholder="전시명, 공연명, 공연장, 작가·주최 검색..." />
         <button type="button" class="reset-btn" id="resetBtn">초기화</button>
@@ -780,6 +778,136 @@
 
     init();
   </script>
+
+<script>
+window.VENUE_URLS = {
+  "정관박물관":"https://busan.go.kr",
+  "포디움다이브":"https://instagram.com",
+  "뮤지엄 원":"https://museum1.co.kr","뮤지엄원":"https://museum1.co.kr",
+  "고은사진미술관":"https://goeunmuseum.kr",
+  "KT&G상상마당 부산":"https://sangsangmadang.com","KT&G 상상마당 부산":"https://sangsangmadang.com","상상마당 부산":"https://sangsangmadang.com",
+  "갤러리 인터페이스":"http://galleryinterface.kr",
+  "청년창조발전소":"https://bsnamgu.go.kr",
+  "스타필드 시티 명지":"https://starfield.co.kr",
+  "해운대 바다 갤러리":"https://haeundaegallery.com","해운대바다갤러리":"https://haeundaegallery.com",
+  "부산도서관":"https://busan.go.kr",
+  "스페이스 하이":"https://instagram.com",
+  "붐빌":"https://instagram.com","space bv":"https://instagram.com",
+  "갤러리 재희":"https://instagram.com",
+  "스페이스 원지":"https://instagram.com",
+  "스페이스 위버멘쉬":"https://over-man.com",
+  "리빈갤러리":"https://instagram.com",
+  "데이트갤러리":"https://instagram.com",
+  "부산갤러리":"https://busangallery.com",
+  "스페이스 포포":"http://spacefofo.kr",
+  "가온아트홀":"http://alltheway.kr",
+  "부산시청전시실":"https://busan.go.kr","부산시청 전시실":"https://busan.go.kr",
+  "레오앤 갤러리":"http://leowith.com","레오앤갤러리":"http://leowith.com",
+  "18-1갤러리":"https://instagram.com",
+  "해운대문화회관":"https://haeundae.go.kr",
+  "낙동아트센터":"https://bsgangseo.go.kr",
+  "동래문화회관":"https://dongnae.go.kr",
+  "신세계센텀시티 9층 문화홀":"https://shinsegae.com","신세계백화점 센텀시티":"https://shinsegae.com",
+  "다누림센터 다누림홀":"http://sasangculture.or.kr","다누림홀":"http://sasangculture.or.kr",
+  "기장군청 차성아트홀":"https://gijang.go.kr","차성아트홀":"https://gijang.go.kr",
+  "어댑터씨어터":"https://adapter.theater",
+  "소향씨어터 신한카드홀":"http://sohyanglottehall.com","소향씨어터":"http://sohyanglottehall.com",
+  "경성대학교 예노소극장":"https://ks.ac.kr","예노소극장":"https://ks.ac.kr",
+  "을숙도문화회관":"https://saha.go.kr",
+  "북구문화예술회관":"https://bsbukgu.go.kr",
+  "정관에듀파크":"https://gijang.go.kr",
+  "브릭홀":"https://spacecloud.kr",
+  "북두칠성도서관":"http://book7library.co.kr",
+  "부산시립예술단":"https://bscc.or.kr",
+  "부산문화회관":"https://bscc.or.kr"
+};
+</script>
+
+
+<style>
+  #statusPills .pill-btn[data-status="진행중"].active{background:#dc2626!important;border-color:#dc2626!important;color:#fff!important}
+  #statusPills .pill-btn[data-status="예정"].active,#statusPills .pill-btn[data-status="개막 예정"].active{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important}
+</style>
+<script>
+(function(){
+  let DB=[];
+  const of=window.fetch;
+  window.fetch=async function(...a){
+    const r=await of.apply(this,a);
+    if(typeof a==="string"&&a.includes("events.json")){
+      try{DB=(await r.clone().json()).filter(x=>!(x.venue||"").includes("롯데갤러리 광복")&&!(x.title||"").includes("롯데갤러리 광복"));}catch(e){}
+    }
+    return r;
+  };
+  function vUrl(v,fb){
+    if(!v)return fb||"";
+    const c=v.trim();
+    if(window.VENUE_URLS&&window.VENUE_URLS[c])return window.VENUE_URLS[c];
+    for(const[k,u]of Object.entries(window.VENUE_URLS||{}))if(c.includes(k))return u;
+    return fb||"";
+  }
+  function sTag(t){
+    if(!t)return"문화칼럼";
+    if(/ADFA|adfa/.test(t))return"ADFA칼럼";
+    if(t.includes("알고리즘"))return"알고리즘예술가";
+    if(t.includes("초대석"))return"초대석";
+    if(t.includes("미학칼럼"))return"미학칼럼";
+    return"문화칼럼";
+  }
+  function draw(){
+    const g=document.getElementById("cardsGrid")||document.querySelector(".cards-grid");
+    const ce=document.getElementById("resultCount")||document.querySelector(".result-header");
+    if(!g||!DB.length)return;
+    const cat=document.querySelector("#catPills .pill-btn.active")?.getAttribute("data-cat")||"ALL";
+    const st=document.querySelector("#statusPills .pill-btn.active")?.getAttribute("data-status")||"ALL";
+    const reg=document.getElementById("regionSelect")?.value||"ALL";
+    const kw=(document.getElementById("keywordInput")?.value||"").trim().toLowerCase();
+
+    const list=DB.filter(x=>{
+      const isC=x.category==="강경호 문화칼럼"||x.status==="칼럼";
+      if(cat==="강경호 문화칼럼"||reg==="강경호 문화칼럼"){
+        if(!isC)return false;
+      }else{
+        if(cat!=="ALL"&&x.category!==cat)return false;
+        if(!isC&&st!=="ALL"){
+          const ok=(st==="예정"||st==="개막 예정")?["예정","개막 예정"]:[st];
+          if(!ok.includes(x.status))return false;
+        }
+        if(reg!=="ALL"){
+          if(reg==="부산 전체"){if(!x.isBusan&&!(x.region||"").includes("부산"))return false;}
+          else if(reg==="전국 주요 권역"){if(x.isBusan||(x.region||"").includes("부산"))return false;}
+          else if(!(x.region||"").includes(reg))return false;
+        }
+      }
+      if(kw&&!`${x.title||""} ${x.venue||""} ${x.artist||""} ${x.region||""}`.toLowerCase().includes(kw))return false;
+      return true;
+    });
+
+    if(ce)ce.innerHTML=`총 <strong>${list.length}</strong>건의 큐레이션 일정`;
+    g.innerHTML=list.map(x=>{
+      const isC=x.category==="강경호 문화칼럼"||x.status==="칼럼";
+      if(isC){
+        const u=x.newsUrl||x.officialUrl||"https://newsbusan.com";
+        const sum=(x.title&&x.title.includes(":"))?x.title.split(":").slice(1).join(":").trim():"부산·전국 문화예술 현장과 동시대 미학의 맥락을 짚는 심층 비평 칼럼";
+        return`<article class="art-card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:#dc2626;color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">칼럼</span><span style="color:#2563eb;font-weight:700;">강경호 문화칼럼</span></div><span style="color:#374151;font-weight:600;background:#f1f5f9;padding:3px 8px;border-radius:5px;">${sTag(x.title)}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${x.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${x.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">출처</span><span style="font-weight:600;color:#111827;">뉴스부산 (newsbusan.com)</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">필자</span><span style="font-weight:600;color:#111827;">강경호 | 문화기획자·문화평론가</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">핵심 요약</span><span style="color:#374151;line-height:1.45;">${sum}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><a href="${u}" target="_blank" rel="noopener noreferrer" style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#14284b;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">뉴스부산 비평·취재기사 보기 ↗</a><button type="button" onclick="navigator.clipboard.writeText('${u}');alert('기사 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
+      }
+      const sc=x.status==="진행중"?"#dc2626":"#2563eb";
+      const sl=(x.status==="개막 예정")?"예정":(x.status||"진행중");
+      const vu=vUrl(x.venue,x.officialUrl);
+      const vh=vu?`<a href="${vu}" target="_blank" rel="noopener noreferrer" style="color:#111827;font-weight:700;text-decoration:underline;">${x.venue||""} ↗</a>`:`<span style="font-weight:600;color:#111827;">${x.venue||""}</span>`;
+      const cf=(x.fee||"상세 안내 확인").replace(/↗/g,"").trim();
+      const ar=(x.artist&&x.artist.trim())?x.artist.trim():"주최 측 공식 안내 참조";
+      const cu=vu||x.newsUrl||"https://busanartlab.com";
+      return`<article class="art-card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:${sc};color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">${sl}</span><span style="color:#2563eb;font-weight:700;">${x.category||"문화예술"}</span></div><span style="color:#6b7280;font-size:12px;">${x.region||""}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${x.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${x.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">장소</span><span>${vh}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">관람</span><span style="color:#1d4ed8;font-weight:600;">${cf}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">참여작가</span><span style="color:#1f2937;line-height:1.45;">${ar}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><div style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#f1f5f9;color:#334155;font-size:12px;font-weight:700;border:1px solid #e2e8f0;">부산아트랩 문화예술 아카이브</div><button type="button" onclick="navigator.clipboard.writeText('${cu}');alert('공식 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
+    }).join("");
+  }
+  setTimeout(draw,350);
+  document.addEventListener("click",e=>{if(e.target.closest(".pill-btn")||e.target.closest("#resetBtn"))setTimeout(draw,40);});
+  document.addEventListener("change",e=>{if(e.target&&e.target.id==="regionSelect")setTimeout(draw,40);});
+  document.addEventListener("input",e=>{if(e.target&&e.target.id==="keywordInput")setTimeout(draw,40);});
+})();
+</script>
+
 </body>
 </html>
 
