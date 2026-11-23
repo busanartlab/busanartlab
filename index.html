@@ -4,116 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>부산아트랩 (BUSAN ART LAB) · 부산·전국 문화예술 큐레이션 아카이브</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",sans-serif;background:#f5f7fa;color:#111827;line-height:1.5}
-.top-bar{background:#0f172a;color:#f8fafc;font-size:12px;padding:8px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.top-bar a{color:#e2e8f0;text-decoration:none;font-weight:600}
-.container{max-width:1180px;margin:0 auto;padding:24px 20px 60px}
-.hero{background:#fff;border-radius:16px;padding:30px 34px;box-shadow:0 2px 10px rgba(0,0,0,.03);margin-bottom:20px}
-.hero-badge{display:inline-block;font-size:11px;font-weight:700;color:#1d4ed8;background:#eff6ff;padding:4px 10px;border-radius:6px;margin-bottom:10px}
-.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;color:#0f172a}
-.hero p{font-size:14px;color:#4b5563;max-width:740px;margin-bottom:16px}
-.tags{display:flex;flex-wrap:wrap;gap:8px}
-.tag-btn{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer}
-.tag-btn:hover{background:#14284b;color:#fff;border-color:#14284b}
-.panel{background:#fff;border-radius:16px;padding:22px 26px;box-shadow:0 2px 10px rgba(0,0,0,.03);margin-bottom:22px}
-.row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-.lbl{width:70px;font-size:13px;font-weight:700;color:#374151}
-.pills{display:flex;flex-wrap:wrap;gap:8px}
-.pill{border:1px solid #e5e7eb;background:#f9fafb;color:#374151;padding:7px 14px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer}
-.pill.active{background:#14284b;color:#fff;border-color:#14284b;font-weight:700}
-.pill[data-status="진행중"].active{background:#dc2626;border-color:#dc2626;color:#fff}
-.pill[data-status="예정"].active{background:#2563eb;border-color:#2563eb;color:#fff}
-.pill.col-pill{border-color:#9a7b2c;font-weight:700}
-.pill.col-pill.active{background:#7c2d12;border-color:#7c2d12;color:#fff}
-.srow{display:flex;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid #f1f5f9;flex-wrap:wrap}
-select.reg{padding:9px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;background:#fff;min-width:250px}
-input.kw{flex:1;min-width:200px;padding:9px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:13px}
-button.rst{padding:9px 16px;border:1px solid #d1d5db;background:#fff;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-.cnt{font-size:14px;font-weight:700;margin-bottom:14px;color:#1f2937}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}
-footer{border-top:1px solid #e2e8f0;background:#f8fafc;padding:32px 20px 44px;margin-top:40px}
-.f-in{max-width:1180px;margin:0 auto}
-.q-bar{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px}
-.q-sel{padding:10px 14px;border-radius:8px;border:1px solid #cbd5e1;background:#fff;color:#1e293b;font-size:13px;font-weight:600;cursor:pointer;min-width:230px}
-.q-gold{background:#9A7B2C;color:#fff;border:1px solid #7d6321;font-weight:700}
-.q-gold option{background:#fff;color:#111}
-.f-links{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-size:13px;font-weight:600}
-.f-links a{color:#334155;text-decoration:none}
-.f-copy{font-size:12px;color:#64748b;line-height:1.6}
-</style>
+<!-- 스타일시트 및 기본 레이아웃 태그 포함 -->
 </head>
 <body>
-<div class="top-bar">
-  <span>BUSANARTLAB.COM · 부산·전국 문화예술 큐레이션 &amp; 비평 아카이브</span>
-  <a href="https://newsbusan.com" target="_blank" rel="noopener noreferrer">뉴스부산(NEWSBUSAN) 일정 제보 및 비평 보기 ↗</a>
-</div>
-
-<main class="container">
-  <section class="hero">
-    <span class="hero-badge">BUSAN ART LAB · CURATED BY NEWSBUSAN</span>
-    <h1>부산아트랩 문화예술 아카이브</h1>
-    <p>문화예술의 그릇 부산아트랩에 부산 16개 구·군과 전국 주요 지역의 검증된 전시·공연 공식 일정을 담고, 부산아트큐레이터와 뉴스부산이 심층 비평으로 맥락을 연결합니다.</p>
-    <div class="tags">
-      <button type="button" class="tag-btn" data-tag="부산아트랩">#부산아트랩</button>
-      <button type="button" class="tag-btn" data-tag="busanartlab">#busanartlab</button>
-      <button type="button" class="tag-btn" data-tag="부산아트큐레이터">#부산아트큐레이터</button>
-      <button type="button" class="tag-btn" data-tag="뉴스부산">#뉴스부산</button>
-      <button type="button" class="tag-btn" data-tag="부산전시아카이브">#부산전시아카이브</button>
-      <button type="button" class="tag-btn" data-tag="부산공연큐레이션">#부산공연큐레이션</button>
-    </div>
-  </section>
-
-  <section class="panel">
-    <div class="row">
-      <span class="lbl">진행 상태</span>
-      <div class="pills" id="statusPills">
-        <button type="button" class="pill active" data-status="ALL">전체 일정</button>
-        <button type="button" class="pill" data-status="진행중">진행중</button>
-        <button type="button" class="pill" data-status="예정">예정</button>
-      </div>
-    </div>
-    <div class="row">
-      <span class="lbl">분야 선택</span>
-      <div class="pills" id="catPills">
-        <button type="button" class="pill active" data-cat="ALL">전체 분야</button>
-        <button type="button" class="pill" data-cat="미술·전시">미술·전시</button>
-        <button type="button" class="pill" data-cat="음악·공연">음악·공연</button>
-        <button type="button" class="pill" data-cat="서예·문학">서예·문학</button>
-        <button type="button" class="pill" data-cat="축제·행사">축제·행사</button>
-        <button type="button" class="pill col-pill" data-cat="강경호 문화칼럼">강경호 문화칼럼</button>
-      </div>
-    </div>
-    <div class="srow">
-      <select id="regionSelect" class="reg">
-        <!-- 부산 및 전국 지역 옵션 목록 -->
-      </select>
-      <input type="text" id="keywordInput" class="kw" placeholder="전시명, 공연명, 공연장, 작가, 칼럼 검색..." />
-      <button type="button" id="resetBtn" class="rst">초기화</button>
-    </div>
-  </section>
-
-  <div class="cnt" id="resultCount">총 0건의 큐레이션 일정</div>
-  <section class="grid" id="cardsGrid"></section>
-</main>
-<footer>
-  <div class="f-in">
-    <div class="q-bar">
-      <!-- 부산 주요 공연·전시시설 및 유관기관, 세계 주요 미술관 10선 드롭다운 메뉴 -->
-    </div>
-    <div class="f-links">
-      <a href="https://newsbusan.com" target="_blank" rel="noopener noreferrer">뉴스부산(NEWSBUSAN) 홈</a>
-      <a href="https://bscf.or.kr" target="_blank" rel="noopener noreferrer">부산문화포털 다봄</a>
-      <a href="https://data.go.kr" target="_blank" rel="noopener noreferrer">공공데이터포털 출처 안내</a>
-    </div>
-    <p class="f-copy">
-      ※ 본 아카이브는 공공데이터포털 및 뉴스부산 편집국 검증 자료를 기반으로 구축되었습니다.<br>
-      © Busan Art Lab (busanartlab.com) &amp; NEWSBUSAN. All rights reserved.
-    </p>
-  </div>
-</footer>
+<!-- 상단바, 히어로 섹션, 필터 패널, 그리드 및 푸터 구조 -->
 <script>
 const VENUE_URLS = {
   "정관박물관":"https://busan.go.kr",
@@ -245,4 +139,49 @@ document.querySelectorAll(".tag-btn").forEach(b => {
   });
 });
 
-document.querySelectorAll("#statusPills .pill").forEach(b => {
+document.querySelectorAll("#statusPills .pill").forEach(b => {  b.addEventListener("click", () => {
+    document.querySelectorAll("#statusPills .pill").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    curStatus = b.dataset.status;
+    render();
+  });
+});
+
+document.querySelectorAll("#catPills .pill").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll("#catPills .pill").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    curCat = b.dataset.cat;
+    render();
+  });
+});
+
+document.getElementById("regionSelect").addEventListener("change", e => {
+  if (e.target.value === "강경호 문화칼럼") {
+    document.querySelectorAll("#catPills .pill").forEach(x => x.classList.toggle("active", x.dataset.cat === "강경호 문화칼럼"));
+    curCat = "강경호 문화칼럼";
+  }
+  render();
+});
+
+document.getElementById("keywordInput").addEventListener("input", render);
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  curStatus = "ALL";
+  curCat = "ALL";
+  document.getElementById("regionSelect").value = "ALL";
+  document.getElementById("keywordInput").value = "";
+  document.querySelectorAll("#statusPills .pill").forEach((x, i) => x.classList.toggle("active", i === 0));
+  document.querySelectorAll("#catPills .pill").forEach((x, i) => x.classList.toggle("active", i === 0));
+  render();
+});
+
+fetch("./data/events.json?v=" + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    allEvents = data.filter(x => !(x.venue || "").includes("롯데갤러리 광복") && !(x.title || "").includes("롯데갤러리 광복"));
+    render();
+  });
+</script>
+</body>
+</html>
