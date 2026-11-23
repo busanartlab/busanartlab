@@ -287,6 +287,21 @@ def main():
         return
 
     os.makedirs("data", exist_ok=True)
+
+    # 1. 기존 events.json에서 '강경호 문화칼럼' 데이터 미리 보존
+    saved_columns = []
+    if os.path.exists(OUTPUT_PATH):
+        try:
+            with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+                old_data = json.load(f)
+                saved_columns = [
+                    x for x in old_data
+                    if x.get("category") == "강경호 문화칼럼" or x.get("status") == "칼럼"
+                ]
+        except Exception as e:
+            print(f"기존 칼럼 로드 참고: {e}")
+
+    # 2. 공공데이터 API 및 뉴스부산 기사 수집
     articles = fetch_newsbusan_articles()
     print(f"뉴스부산 기사 인덱스 {len(articles)}건 확보.")
     seen_keys = set()
@@ -297,10 +312,19 @@ def main():
 
     all_events.sort(key=lambda x: (not x["isBusan"], not bool(x["newsUrl"]), x["period"]))
 
+    # 3. 새로 수집한 일정 뒤에 보존해 둔 '강경호 문화칼럼' 자동 병합
+    all_events = [
+        x for x in all_events
+        if x.get("category") != "강경호 문화칼럼" and x.get("status") != "칼럼"
+    ] + saved_columns
+
     if all_events:
         with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
             json.dump(all_events, f, ensure_ascii=False, indent=2)
-        print(f"성공: 총 {len(all_events)}건(부산 {len(busan_events)}건 + 통합 {len(kcisa_events)}건) 업데이트 완료.")
+        print(
+            f"성공: 총 {len(all_events)}건"
+            f"(부산 {len(busan_events)}건 + 통합 {len(kcisa_events)}건 + 문화칼럼 {len(saved_columns)}건) 업데이트 완료."
+        )
     else:
         print("수집된 신규 데이터가 없습니다.")
 
