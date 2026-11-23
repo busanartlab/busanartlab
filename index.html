@@ -665,102 +665,116 @@
     }
 
     function renderCards() {
-      const regionVal = regionSelect.value;
-      const kw = keywordInput.value.trim().toLowerCase();
+  const VENUE_URLS = {
+    "정관박물관":"https://busan.go.kr",
+    "포디움다이브":"https://instagram.com",
+    "뮤지엄 원":"https://museum1.co.kr","뮤지엄원":"https://museum1.co.kr",
+    "고은사진미술관":"https://goeunmuseum.kr",
+    "KT&G상상마당 부산":"https://sangsangmadang.com","KT&G 상상마당 부산":"https://sangsangmadang.com","상상마당 부산":"https://sangsangmadang.com",
+    "갤러리 인터페이스":"http://galleryinterface.kr",
+    "청년창조발전소":"https://bsnamgu.go.kr",
+    "스타필드 시티 명지":"https://starfield.co.kr",
+    "해운대 바다 갤러리":"https://haeundaegallery.com","해운대바다갤러리":"https://haeundaegallery.com",
+    "부산도서관":"https://busan.go.kr",
+    "스페이스 하이":"https://instagram.com",
+    "붐빌":"https://instagram.com","space bv":"https://instagram.com",
+    "갤러리 재희":"https://instagram.com",
+    "스페이스 원지":"https://instagram.com",
+    "스페이스 위버멘쉬":"https://over-man.com",
+    "리빈갤러리":"https://instagram.com",
+    "데이트갤러리":"https://instagram.com",
+    "부산갤러리":"https://busangallery.com",
+    "스페이스 포포":"http://spacefofo.kr",
+    "가온아트홀":"http://alltheway.kr",
+    "부산시청전시실":"https://busan.go.kr","부산시청 전시실":"https://busan.go.kr",
+    "레오앤 갤러리":"http://leowith.com","레오앤갤러리":"http://leowith.com",
+    "18-1갤러리":"https://instagram.com",
+    "해운대문화회관":"https://haeundae.go.kr",
+    "낙동아트센터":"https://bsgangseo.go.kr",
+    "동래문화회관":"https://dongnae.go.kr",
+    "신세계센텀시티 9층 문화홀":"https://shinsegae.com","신세계백화점 센텀시티":"https://shinsegae.com",
+    "다누림센터 다누림홀":"http://sasangculture.or.kr","다누림홀":"http://sasangculture.or.kr",
+    "기장군청 차성아트홀":"https://gijang.go.kr","차성아트홀":"https://gijang.go.kr",
+    "어댑터씨어터":"https://adapter.theater",
+    "소향씨어터 신한카드홀":"http://sohyanglottehall.com","소향씨어터":"http://sohyanglottehall.com",
+    "경성대학교 예노소극장":"https://ks.ac.kr","예노소극장":"https://ks.ac.kr",
+    "을숙도문화회관":"https://saha.go.kr",
+    "북구문화예술회관":"https://bsbukgu.go.kr",
+    "정관에듀파크":"https://gijang.go.kr",
+    "브릭홀":"https://spacecloud.kr",
+    "북두칠성도서관":"http://book7library.co.kr",
+    "부산시립예술단":"https://bscc.or.kr",
+    "부산문화회관":"https://bscc.or.kr"
+  };
+  function getVenueUrl(v, fb) {
+    if (!v) return fb || "";
+    const c = v.trim();
+    if (VENUE_URLS[c]) return VENUE_URLS[c];
+    for (const [k, u] of Object.entries(VENUE_URLS)) if (c.includes(k)) return u;
+    return fb || "";
+  }
+  function getSeriesTag(t) {
+    if (!t) return "문화칼럼";
+    if (/ADFA|adfa/.test(t)) return "ADFA칼럼";
+    if (t.includes("알고리즘")) return "알고리즘예술가";
+    if (t.includes("초대석")) return "초대석";
+    if (t.includes("미학칼럼")) return "미학칼럼";
+    return "문화칼럼";
+  }
 
-      const filtered = allEvents.filter(item => {
-        if (currentStatus !== "ALL" && item.status !== currentStatus) return false;
-        if (currentCat !== "ALL" && item.category !== currentCat) return false;
+  const kw = (keywordInput.value || "").trim().toLowerCase();
+  const isColTab = (currentCat === "강경호 문화칼럼" || regionSelect.value === "강경호 문화칼럼");
 
-        if (regionVal === "BUSAN_ALL" && !item.isBusan) return false;
-        if (regionVal !== "ALL" && regionVal !== "BUSAN_ALL" && item.region !== regionVal) return false;
-
-        if (kw) {
-          const hay = `${item.title} ${item.venue} ${item.region} ${item.artist || ""}`.toLowerCase();
-          if (!hay.includes(kw)) return false;
-        }
-        return true;
-      });
-
-      totalCount.textContent = filtered.length;
-      if (filtered.length === 0) {
-        artGrid.innerHTML = `<div class="empty-box">선택하신 조건에 해당하는 전시·공연 일정이 없습니다.<br>필터를 초기화하거나 다른 구·군 또는 분야를 선택해 보세요.</div>`;
-        return;
+  const filtered = allEvents.filter(e => {
+    if ((e.venue || "").includes("롯데갤러리 광복") || (e.title || "").includes("롯데갤러리 광복")) return false;
+    const isC = (e.category === "강경호 문화칼럼" || e.status === "칼럼");
+    if (isColTab) {
+      if (!isC) return false;
+    } else {
+      if (currentCat !== "ALL" && e.category !== currentCat) return false;
+      if (!isC && currentStatus !== "ALL") {
+        const ok = (currentStatus === "예정" || currentStatus === "개막 예정") ? ["예정", "개막 예정"] : [currentStatus];
+        if (!ok.includes(e.status)) return false;
       }
-
-      artGrid.innerHTML = filtered.map(item => {
-        const isUp = item.status === "예정";
-        const cleanNews = (item.newsUrl || "").trim();
-        const hasArticle = cleanNews.startsWith("http") && cleanNews.replace(/\/$/, "") !== "https://newsbusan.com";
-        const targetUrl = (item.officialUrl || cleanNews || "").trim();
-        const rawArtist = (item.artist || "").trim();
-        const hasValidArtist = rawArtist && !rawArtist.includes("공식 등록") && rawArtist !== "부산문화포털 다봄" && rawArtist !== "문화포털";
-
-        return `<article class="art-card ${hasArticle ? "has-review" : ""}">
-          <div>
-            <div class="card-top">
-              <div class="cat-group">
-                <span class="status-badge ${isUp ? "upcoming" : ""}">${item.status || "진행중"}</span>
-                <span class="cat-label">${item.category}</span>
-                ${hasArticle ? `<span class="review-badge">비평·취재연계</span>` : ""}
-              </div>
-              <span class="loc-label">${item.region}</span>
-            </div>
-            <h2>
-              ${targetUrl ? `<a href="${targetUrl}" target="_blank" rel="noopener" class="title-link">${item.title}</a>` : item.title}
-            </h2>
-            <ul class="fact-list">
-              <li><strong>일정</strong> <span>${item.period}</span></li>
-              <li><strong>장소</strong> <span>${item.venue}</span></li>
-              ${hasValidArtist ? `<li><strong>주최·참여</strong> <span>${rawArtist}</span></li>` : ""}
-              <li>
-                <strong>관람</strong>
-                ${targetUrl ? `<a href="${targetUrl}" target="_blank" rel="noopener" class="fee-link">${item.fee} ↗</a>` : `<span>${item.fee}</span>`}
-              </li>
-            </ul>
-          </div>
-          <div class="actions">
-            ${hasArticle ? `<a href="${cleanNews}" target="_blank" rel="noopener" class="btn btn-primary">뉴스부산 비평·취재기사 보기</a>` : ""}
-            <div class="btn-row">
-              ${targetUrl ? `<a href="${targetUrl}" target="_blank" rel="noopener" class="btn btn-secondary">상세 안내·예매 바로가기 ↗</a>` : ""}
-              <button type="button" class="btn btn-share" onclick="copyShare('${item.title.replace(/'/g, "\\'")}', '${targetUrl}')">링크 복사</button>
-            </div>
-          </div>
-        </article>`;
-      }).join("");
+      const reg = regionSelect.value;
+      if (reg !== "ALL") {
+        if (reg === "부산 전체") { if (!e.isBusan && !(e.region || "").includes("부산")) return false; }
+        else if (reg === "전국 주요 권역") { if (e.isBusan || (e.region || "").includes("부산")) return false; }
+        else if (!(e.region || "").includes(reg)) return false;
+      }
     }
+    if (kw) {
+      const hay = `${e.title||""} ${e.venue||""} ${e.artist||""} ${e.region||""}`.toLowerCase();
+      if (!hay.includes(kw)) return false;
+    }
+    return true;
+  });
 
-    document.querySelectorAll("#statusPills .pill-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll("#statusPills .pill-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentStatus = btn.dataset.status;
-        renderCards();
-      });
-    });
+  resultCount.innerHTML = `총 <strong>${filtered.length}</strong>건의 큐레이션 일정`;
+  if (!filtered.length) {
+    cardsGrid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#6b7280;background:#fff;border-radius:14px;border:1px solid #e5e7eb;">선택하신 조건에 해당하는 전시·공연 일정이 없습니다.<br>필터를 초기화하거나 다른 구·군 또는 분야를 선택해 보세요.</div>`;
+    return;
+  }
 
-    document.querySelectorAll("#catPills .pill-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll("#catPills .pill-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentCat = btn.dataset.cat;
-        renderCards();
-      });
-    });
+  cardsGrid.innerHTML = filtered.map(e => {
+    const isC = (e.category === "강경호 문화칼럼" || e.status === "칼럼");
+    if (isC) {
+      const u = e.newsUrl || e.officialUrl || "https://newsbusan.com";
+      const sum = (e.title && e.title.includes(":")) ? e.title.split(":").slice(1).join(":").trim() : "부산·전국 문화예술 현장과 동시대 미학의 맥락을 짚는 심층 비평 칼럼";
+      return `<article class="card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:#dc2626;color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">칼럼</span><span style="color:#2563eb;font-weight:700;">강경호 문화칼럼</span></div><span style="color:#374151;font-weight:600;background:#f1f5f9;padding:3px 8px;border-radius:5px;">${getSeriesTag(e.title)}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${e.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${e.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">출처</span><span style="font-weight:600;color:#111827;">뉴스부산 (newsbusan.com)</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">필자</span><span style="font-weight:600;color:#111827;">강경호 | 문화기획자·문화평론가</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">핵심 요약</span><span style="color:#374151;line-height:1.45;">${sum}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><a href="${u}" target="_blank" rel="noopener noreferrer" style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#14284b;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">뉴스부산 비평·취재기사 보기 ↗</a><button type="button" onclick="navigator.clipboard.writeText('${u}');alert('기사 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
+    }
+    const sc = e.status === "진행중" ? "#dc2626" : "#2563eb";
+    const sl = (e.status === "개막 예정") ? "예정" : (e.status || "진행중");
+    const vu = getVenueUrl(e.venue, e.officialUrl);
+    const vh = vu ? `<a href="${vu}" target="_blank" rel="noopener noreferrer" style="color:#111827;font-weight:700;text-decoration:underline;">${e.venue||""} ↗</a>` : `<span style="font-weight:600;color:#111827;">${e.venue||""}</span>`;
+    const cf = (e.fee || "상세 안내 확인").replace(/↗/g, "").trim();
+    const ar = (e.artist && e.artist.trim()) ? e.artist.trim() : "주최 측 공식 안내 참조";
+    const cu = vu || e.newsUrl || "https://busanartlab.com";
+    return `<article class="card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:${sc};color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">${sl}</span><span style="color:#2563eb;font-weight:700;">${e.category||"문화예술"}</span></div><span style="color:#6b7280;font-size:12px;">${e.region||""}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${e.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${e.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">장소</span><span>${vh}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">관람</span><span style="color:#1d4ed8;font-weight:600;">${cf}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">참여작가</span><span style="color:#1f2937;line-height:1.45;">${ar}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><div style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#f1f5f9;color:#334155;font-size:12px;font-weight:700;border:1px solid #e2e8f0;">부산아트랩 문화예술 아카이브</div><button type="button" onclick="navigator.clipboard.writeText('${cu}');alert('공식 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
+  }).join("");
+}
 
-    regionSelect.addEventListener("change", renderCards);
-    keywordInput.addEventListener("input", renderCards);
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      currentStatus = "ALL";
-      currentCat = "ALL";
-      regionSelect.value = "ALL";
-      keywordInput.value = "";
-      document.querySelectorAll("#statusPills .pill-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
-      document.querySelectorAll("#catPills .pill-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
-      renderCards();
-    });
-
-    async function init() {
+function init() {
       try {
         const res = await fetch("data/events.json?v=" + Date.now());
         if (!res.ok) throw new Error("not found");
@@ -919,7 +933,7 @@ window.VENUE_URLS = {
 })();
 </script>
 
-<script src="./app_override.js?v=2"></script></body>
+</body>
 </html>
 
 <script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="09e17d53-bb59-4b96-afcf-8ef731eebd47" data-app-host="app.netlify.com" data-account-tier="free"></script>
