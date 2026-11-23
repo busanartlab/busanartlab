@@ -824,87 +824,98 @@ window.VENUE_URLS = {
 </script>
 
 
+
+
+
 <style>
   #statusPills .pill-btn[data-status="진행중"].active{background:#dc2626!important;border-color:#dc2626!important;color:#fff!important}
   #statusPills .pill-btn[data-status="예정"].active,#statusPills .pill-btn[data-status="개막 예정"].active{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important}
 </style>
 <script>
 (function(){
-  let DB=[];
-  const of=window.fetch;
-  window.fetch=async function(...a){
-    const r=await of.apply(this,a);
-    if(typeof a==="string"&&a.includes("events.json")){
-      try{DB=(await r.clone().json()).filter(x=>!(x.venue||"").includes("롯데갤러리 광복")&&!(x.title||"").includes("롯데갤러리 광복"));}catch(e){}
-    }
-    return r;
-  };
-  function vUrl(v,fb){
-    if(!v)return fb||"";
-    const c=v.trim();
-    if(window.VENUE_URLS&&window.VENUE_URLS[c])return window.VENUE_URLS[c];
-    for(const[k,u]of Object.entries(window.VENUE_URLS||{}))if(c.includes(k))return u;
-    return fb||"";
+  let DB = [];
+  function vUrl(v, fb){
+    if(!v) return fb || "";
+    const c = v.trim();
+    if(window.VENUE_URLS && window.VENUE_URLS[c]) return window.VENUE_URLS[c];
+    for(const [k, u] of Object.entries(window.VENUE_URLS || {})) if(c.includes(k)) return u;
+    return fb || "";
   }
   function sTag(t){
-    if(!t)return"문화칼럼";
-    if(/ADFA|adfa/.test(t))return"ADFA칼럼";
-    if(t.includes("알고리즘"))return"알고리즘예술가";
-    if(t.includes("초대석"))return"초대석";
-    if(t.includes("미학칼럼"))return"미학칼럼";
-    return"문화칼럼";
+    if(!t) return "문화칼럼";
+    if(/ADFA|adfa/.test(t)) return "ADFA칼럼";
+    if(t.includes("알고리즘")) return "알고리즘예술가";
+    if(t.includes("초대석")) return "초대석";
+    if(t.includes("미학칼럼")) return "미학칼럼";
+    return "문화칼럼";
   }
-  function draw(){
-    const g=document.getElementById("cardsGrid")||document.querySelector(".cards-grid");
-    const ce=document.getElementById("resultCount")||document.querySelector(".result-header");
-    if(!g||!DB.length)return;
-    const cat=document.querySelector("#catPills .pill-btn.active")?.getAttribute("data-cat")||"ALL";
-    const st=document.querySelector("#statusPills .pill-btn.active")?.getAttribute("data-status")||"ALL";
-    const reg=document.getElementById("regionSelect")?.value||"ALL";
-    const kw=(document.getElementById("keywordInput")?.value||"").trim().toLowerCase();
+  function drawAll(){
+    const g = document.getElementById("cardsGrid") || document.querySelector(".cards-grid");
+    const ce = document.getElementById("resultCount") || document.querySelector(".result-header");
+    if(!g || !DB.length) return;
 
-    const list=DB.filter(x=>{
-      const isC=x.category==="강경호 문화칼럼"||x.status==="칼럼";
-      if(cat==="강경호 문화칼럼"||reg==="강경호 문화칼럼"){
-        if(!isC)return false;
-      }else{
-        if(cat!=="ALL"&&x.category!==cat)return false;
-        if(!isC&&st!=="ALL"){
-          const ok=(st==="예정"||st==="개막 예정")?["예정","개막 예정"]:[st];
-          if(!ok.includes(x.status))return false;
+    const cat = document.querySelector("#catPills .pill-btn.active")?.getAttribute("data-cat") || "ALL";
+    const st = document.querySelector("#statusPills .pill-btn.active")?.getAttribute("data-status") || "ALL";
+    const reg = document.getElementById("regionSelect")?.value || "ALL";
+    const kw = (document.getElementById("keywordInput")?.value || "").trim().toLowerCase();
+
+    const list = DB.filter(x => {
+      const isC = x.category === "강경호 문화칼럼" || x.status === "칼럼";
+      if(cat === "강경호 문화칼럼" || reg === "강경호 문화칼럼"){
+        if(!isC) return false;
+      } else {
+        if(cat !== "ALL" && x.category !== cat) return false;
+        if(!isC && st !== "ALL"){
+          const ok = (st === "예정" || st === "개막 예정") ? ["예정", "개막 예정"] : [st];
+          if(!ok.includes(x.status)) return false;
         }
-        if(reg!=="ALL"){
-          if(reg==="부산 전체"){if(!x.isBusan&&!(x.region||"").includes("부산"))return false;}
-          else if(reg==="전국 주요 권역"){if(x.isBusan||(x.region||"").includes("부산"))return false;}
-          else if(!(x.region||"").includes(reg))return false;
+        if(reg !== "ALL"){
+          if(reg === "부산 전체"){ if(!x.isBusan && !(x.region || "").includes("부산")) return false; }
+          else if(reg === "전국 주요 권역"){ if(x.isBusan || (x.region || "").includes("부산")) return false; }
+          else if(!(x.region || "").includes(reg)) return false;
         }
       }
-      if(kw&&!`${x.title||""} ${x.venue||""} ${x.artist||""} ${x.region||""}`.toLowerCase().includes(kw))return false;
+      if(kw && !`${x.title||""} ${x.venue||""} ${x.artist||""} ${x.region||""}`.toLowerCase().includes(kw)) return false;
       return true;
     });
 
-    if(ce)ce.innerHTML=`총 <strong>${list.length}</strong>건의 큐레이션 일정`;
-    g.innerHTML=list.map(x=>{
-      const isC=x.category==="강경호 문화칼럼"||x.status==="칼럼";
+    if(ce) ce.innerHTML = `총 <strong>${list.length}</strong>건의 큐레이션 일정`;
+    g.innerHTML = list.map(x => {
+      const isC = x.category === "강경호 문화칼럼" || x.status === "칼럼";
       if(isC){
-        const u=x.newsUrl||x.officialUrl||"https://newsbusan.com";
-        const sum=(x.title&&x.title.includes(":"))?x.title.split(":").slice(1).join(":").trim():"부산·전국 문화예술 현장과 동시대 미학의 맥락을 짚는 심층 비평 칼럼";
-        return`<article class="art-card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:#dc2626;color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">칼럼</span><span style="color:#2563eb;font-weight:700;">강경호 문화칼럼</span></div><span style="color:#374151;font-weight:600;background:#f1f5f9;padding:3px 8px;border-radius:5px;">${sTag(x.title)}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${x.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${x.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">출처</span><span style="font-weight:600;color:#111827;">뉴스부산 (newsbusan.com)</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">필자</span><span style="font-weight:600;color:#111827;">강경호 | 문화기획자·문화평론가</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">핵심 요약</span><span style="color:#374151;line-height:1.45;">${sum}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><a href="${u}" target="_blank" rel="noopener noreferrer" style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#14284b;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">뉴스부산 비평·취재기사 보기 ↗</a><button type="button" onclick="navigator.clipboard.writeText('${u}');alert('기사 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
+        const u = x.newsUrl || x.officialUrl || "https://newsbusan.com";
+        const sum = (x.title && x.title.includes(":")) ? x.title.split(":").slice(1).join(":").trim() : "부산·전국 문화예술 현장과 동시대 미학의 맥락을 짚는 심층 비평 칼럼";
+        return `<article class="art-card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:#dc2626;color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">칼럼</span><span style="color:#2563eb;font-weight:700;">강경호 문화칼럼</span></div><span style="color:#374151;font-weight:600;background:#f1f5f9;padding:3px 8px;border-radius:5px;">${sTag(x.title)}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${x.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${x.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">출처</span><span style="font-weight:600;color:#111827;">뉴스부산 (newsbusan.com)</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">필자</span><span style="font-weight:600;color:#111827;">강경호 | 문화기획자·문화평론가</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">핵심 요약</span><span style="color:#374151;line-height:1.45;">${sum}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><a href="${u}" target="_blank" rel="noopener noreferrer" style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#14284b;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">뉴스부산 비평·취재기사 보기 ↗</a><button type="button" onclick="navigator.clipboard.writeText('${u}');alert('기사 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
       }
-      const sc=x.status==="진행중"?"#dc2626":"#2563eb";
-      const sl=(x.status==="개막 예정")?"예정":(x.status||"진행중");
-      const vu=vUrl(x.venue,x.officialUrl);
-      const vh=vu?`<a href="${vu}" target="_blank" rel="noopener noreferrer" style="color:#111827;font-weight:700;text-decoration:underline;">${x.venue||""} ↗</a>`:`<span style="font-weight:600;color:#111827;">${x.venue||""}</span>`;
-      const cf=(x.fee||"상세 안내 확인").replace(/↗/g,"").trim();
-      const ar=(x.artist&&x.artist.trim())?x.artist.trim():"주최 측 공식 안내 참조";
-      const cu=vu||x.newsUrl||"https://busanartlab.com";
-      return`<article class="art-card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:${sc};color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">${sl}</span><span style="color:#2563eb;font-weight:700;">${x.category||"문화예술"}</span></div><span style="color:#6b7280;font-size:12px;">${x.region||""}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${x.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${x.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">장소</span><span>${vh}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">관람</span><span style="color:#1d4ed8;font-weight:600;">${cf}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">참여작가</span><span style="color:#1f2937;line-height:1.45;">${ar}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><div style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#f1f5f9;color:#334155;font-size:12px;font-weight:700;border:1px solid #e2e8f0;">부산아트랩 문화예술 아카이브</div><button type="button" onclick="navigator.clipboard.writeText('${cu}');alert('공식 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
+      const sc = x.status === "진행중" ? "#dc2626" : "#2563eb";
+      const sl = (x.status === "개막 예정") ? "예정" : (x.status || "진행중");
+      const vu = vUrl(x.venue, x.officialUrl);
+      const vh = vu ? `<a href="${vu}" target="_blank" rel="noopener noreferrer" style="color:#111827;font-weight:700;text-decoration:underline;">${x.venue||""} ↗</a>` : `<span style="font-weight:600;color:#111827;">${x.venue||""}</span>`;
+      const cf = (x.fee || "상세 안내 확인").replace(/↗/g, "").trim();
+      const ar = (x.artist && x.artist.trim()) ? x.artist.trim() : "주최 측 공식 안내 참조";
+      const cu = vu || x.newsUrl || "https://busanartlab.com";
+      return `<article class="art-card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:12px;"><div style="display:flex;align-items:center;gap:6px;"><span style="background:${sc};color:#fff;padding:3px 8px;border-radius:5px;font-weight:700;font-size:11px;">${sl}</span><span style="color:#2563eb;font-weight:700;">${x.category||"문화예술"}</span></div><span style="color:#6b7280;font-size:12px;">${x.region||""}</span></div><h3 style="font-size:17px;font-weight:700;color:#111827;line-height:1.45;margin-bottom:16px;">${x.title}</h3><div style="font-size:13px;color:#374151;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">일정</span><span style="font-weight:600;color:#111827;">${x.period||""}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">장소</span><span>${vh}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">관람</span><span style="color:#1d4ed8;font-weight:600;">${cf}</span></div><div style="display:flex;"><span style="width:62px;color:#6b7280;flex-shrink:0;">참여작가</span><span style="color:#1f2937;line-height:1.45;">${ar}</span></div></div></div><div style="display:flex;gap:8px;align-items:center;"><div style="flex:1;text-align:center;padding:10px 12px;border-radius:8px;background:#f1f5f9;color:#334155;font-size:12px;font-weight:700;border:1px solid #e2e8f0;">부산아트랩 문화예술 아카이브</div><button type="button" onclick="navigator.clipboard.writeText('${cu}');alert('공식 링크가 복사되었습니다.');" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font-size:13px;font-weight:600;cursor:pointer;">링크 복사</button></div></article>`;
     }).join("");
   }
-  setTimeout(draw,350);
-  document.addEventListener("click",e=>{if(e.target.closest(".pill-btn")||e.target.closest("#resetBtn"))setTimeout(draw,40);});
-  document.addEventListener("change",e=>{if(e.target&&e.target.id==="regionSelect")setTimeout(draw,40);});
-  document.addEventListener("input",e=>{if(e.target&&e.target.id==="keywordInput")setTimeout(draw,40);});
+
+  window.renderCards = drawAll;
+
+  fetch("./data/events.json?v=" + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      DB = data.filter(x => !(x.venue||"").includes("롯데갤러리 광복") && !(x.title||"").includes("롯데갤러리 광복"));
+      drawAll();
+    });
+
+  document.addEventListener("click", e => {
+    if(e.target.closest(".pill-btn") || e.target.closest("#resetBtn")) setTimeout(drawAll, 20);
+  });
+  document.addEventListener("change", e => {
+    if(e.target && e.target.id === "regionSelect") setTimeout(drawAll, 20);
+  });
+  document.addEventListener("input", e => {
+    if(e.target && e.target.id === "keywordInput") setTimeout(drawAll, 20);
+  });
 })();
 </script>
 
