@@ -441,12 +441,12 @@
       <h1>부산아트랩 문화예술 아카이브</h1>
       <p>문화예술의 그릇 부산아트랩에 부산 16개 구·군과 전국 주요 지역의 검증된 전시·공연 공식 일정을 담고, 부산아트큐레이터와 뉴스부산이 심층 비평으로 맥락을 연결합니다.</p>
       <div class="hashtags">
-        <span>#부산아트랩</span>
-        <span>#busanartlab</span>
-        <span>#부산아트큐레이터</span>
-        <span>#뉴스부산</span>
-        <span>#부산전시아카이브</span>
-        <span>#부산공연큐레이션</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산아트랩';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산아트랩</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='busanartlab';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#busanartlab</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산아트큐레이터';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산아트큐레이터</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='뉴스부산';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#뉴스부산</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산전시아카이브';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산전시아카이브</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('keywordInput').value='부산공연큐레이션';document.getElementById('keywordInput').dispatchEvent(new Event('input'));document.getElementById('keywordInput').scrollIntoView({behavior:'smooth',block:'center'});">#부산공연큐레이션</span>
       </div>
     </div>
   </header>
@@ -470,6 +470,7 @@
           <button type="button" class="pill-btn" data-cat="음악·공연">음악·공연</button>
           <button type="button" class="pill-btn" data-cat="서예·문학">서예·문학</button>
           <button type="button" class="pill-btn" data-cat="축제·행사">축제·행사</button>
+          <button type="button" class="pill-btn" data-cat="강경호 문화칼럼" style="border-color:#9a7b2c;font-weight:700;">강경호 문화칼럼</button>
         </div>
       </div>
 
@@ -522,7 +523,8 @@
       <div class="related-bar">
         <select onchange="if(this.value) window.open(this.value, '_blank');">
           <option value="">부산 주요 공연·전시시설 바로가기</option>
-          <option value="https://bscc.or.kr">부산문화회관 · 부산시민회관</option>
+          <option value="https://bscc.or.kr">부산문화회관</option>
+          <option value="https://bsh.or.kr">부산시민회관</option>
           <option value="https://dureraum.org">영화의전당</option>
           <option value="https://busan.go.kr">부산시립미술관</option>
           <option value="https://busan.go.kr">부산현대미술관</option>
@@ -541,6 +543,19 @@
           <option value="https://culture.go.kr">문화포털 (한국문화정보원)</option>
           <option value="https://busan.go.kr">부산광역시청</option>
           <option value="https://newsbusan.com">인터넷신문 뉴스부산</option>
+        </select>
+        <select onchange="if(this.value) window.open(this.value, '_blank'); this.selectedIndex=0;" style="background:#9A7B2C;color:#FFFFFF;border:1px solid #7d6321;font-weight:700;padding:10px 16px;border-radius:8px;cursor:pointer;">
+          <option value="" style="background:#fff;color:#111;">★ 세계 주요 미술관 10선 바로가기</option>
+          <option value="https://louvre.fr" style="background:#fff;color:#111;">1. [프랑스] 루브르 박물관 (Musée du Louvre)</option>
+          <option value="https://musee-orsay.fr" style="background:#fff;color:#111;">2. [프랑스] 오르세 미술관 (Musée d'Orsay)</option>
+          <option value="https://centrepompidou.fr" style="background:#fff;color:#111;">3. [프랑스] 퐁피두 센터 (Centre Pompidou)</option>
+          <option value="https://tate.org.uk" style="background:#fff;color:#111;">4. [영국] 테이트 모던 (Tate Modern)</option>
+          <option value="https://nationalgallery.org.uk" style="background:#fff;color:#111;">5. [영국] 내셔널 갤러리 (The National Gallery)</option>
+          <option value="https://moma.org" style="background:#fff;color:#111;">6. [미국] 뉴욕 현대미술관 (MoMA)</option>
+          <option value="https://metmuseum.org" style="background:#fff;color:#111;">7. [미국] 메트로폴리탄 미술관 (The Met)</option>
+          <option value="https://uffizi.it" style="background:#fff;color:#111;">8. [이탈리아] 우피치 미술관 (Le Gallerie degli Uffizi)</option>
+          <option value="https://smb.museum" style="background:#fff;color:#111;">9. [독일] 함부르거 반호프 현대미술관 (Hamburger Bahnhof)</option>
+          <option value="https://mori.art.museum" style="background:#fff;color:#111;">10. [일본] 모리 미술관 (Mori Art Museum)</option>
         </select>
       </div>
 
@@ -768,3 +783,4 @@
 </body>
 </html>
 
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="09e17d53-bb59-4b96-afcf-8ef731eebd47" data-app-host="app.netlify.com" data-account-tier="free"></script>
